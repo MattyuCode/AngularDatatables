@@ -1,0 +1,16 @@
+.navbar {
+  z-index: 1;
+  background: linear-gradient(to right, #1a2980, #26d0ce);
+  padding: 5px 1rem;
+  z-index: 3;
+}
+
+.top-nav-collapse {
+  background: linear-gradient(to right, #43cea2, #185a9d);
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    background-color: #4285F4;
+  }
+}
