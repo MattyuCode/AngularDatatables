@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Producto } from 'src/app/models/producto/producto.module';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listar-producto',
@@ -7,7 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListarProductoComponent implements OnInit {
 
-  constructor() { }
+  public productoFormu: FormGroup;
+
+  constructor(private formu: FormBuilder, private toastr: ToastrService, private router: Router) {
+    this.productoFormu = this.formu.group({
+      nombre: ['', Validators.required],
+      posicion: ['', Validators.required],
+      oficio: ['', Validators.required],
+      numero: ['', Validators.required],
+      fecha_inicio: ['', Validators.required],
+      salario: ['', Validators.required]
+    })
+  }
 
   dtOptions: any = {};
   ngOnInit() {
@@ -38,5 +53,22 @@ export class ListarProductoComponent implements OnInit {
         }
       },
     };
+  }
+
+  agregarProduc() {
+    const TODOSPRODUCT: Producto = {
+      nombre: this.productoFormu.get('nombre')?.value,
+      posicion: this.productoFormu.get('posicion')?.value,
+      oficio: this.productoFormu.get('oficio')?.value,
+      numero: this.productoFormu.get('numero')?.value,
+      fecha_inicio: this.productoFormu.get('fecha_inicio')?.value,
+      salario: this.productoFormu.get('salario')?.value,
+    }
+    console.log(TODOSPRODUCT);
+    this.toastr.success("El producto fue registrado exitosamente", "Producto Registrado");
+    // this.router.navigate(['/']);
+    let refresh = document.getElementById('cancel')
+    refresh?.click();
+    this.productoFormu.reset();
   }
 }

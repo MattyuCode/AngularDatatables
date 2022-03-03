@@ -1,16 +1,19 @@
 <section class="section">
-  <div class="container mt-5">
-    <table id="table_id" class="table table-striped table-bordered table-sm row-border hover" datatable
+  <div class="container mt-4 mb-5">
+    <!-- <a class="btn btn-success mb-4" [routerLink]="['/crear']">Agregar nuevo</a> -->
+    <a class="btn btn-success mb-4" data-toggle="modal" data-target="#basicExampleModal">Agregar nuevo</a>
+    <table id="table_id" class="table  table-striped table-bordered table-sm row-border hover" datatable
       [dtOptions]="dtOptions">
 
-      <thead>
-        <tr>
+      <thead class="cyan darken-3 white-text">
+        <tr class="text-center">
           <th>Nombre</th>
           <th>Posicion</th>
           <th>Oficio</th>
           <th>Numero</th>
           <th>Fecha de inicio</th>
           <th>Salario</th>
+          <!-- <th>Estado</th> -->
         </tr>
       </thead>
       <tbody>
@@ -21,6 +24,10 @@
           <td>61</td>
           <td>2011/04/25</td>
           <td>$320,800</td>
+          <!-- <td>
+            <a href="" class="btn btn-info p-2 fas fa-edit">Editar</a>&nbsp;
+            <a href="" class="btn btn-danger p-2  fas fa-trash">Eliminar</a>
+          </td> -->
         </tr>
         <tr>
           <td>Garrett Winters</td>
@@ -29,6 +36,10 @@
           <td>63</td>
           <td>2011/07/25</td>
           <td>$170,750</td>
+          <!-- <td>
+            <a href="" class="btn btn-info p-2">Editar</a>&nbsp;
+            <a href="" class="btn btn-danger p-2">Eliminar</a>
+          </td> -->
         </tr>
         <tr>
           <td>Ashton Cox</td>
@@ -476,7 +487,76 @@
 
   </div>
 
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+    Launch demo modal
+  </button> -->
 
+  <!-- Modal -->
+  <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="productoFormu" (ngSubmit)="agregarProduc()">
+            <input type="text" formControlName="nombre" id="defaultRegisterFormFirstName" class="form-control mb-0"
+              placeholder="Nombre completo">
+            <div class="text-danger"
+              *ngIf="productoFormu.get('nombre')?.hasError('required') && productoFormu.get('nombre')?.touched">
+              <span>El nombre es obligatorio</span></div>
+
+
+            <input type="text" formControlName="posicion" id="defaultRegisterFormFirstName"
+              class="form-control mb-0 mt-4" placeholder="Posicion">
+            <div class="text-danger"
+              *ngIf="productoFormu.get('posicion')?.hasError('required') && productoFormu.get('posicion')?.touched">
+              <span>La posicion es obligatorio</span></div>
+
+            <input type="text" formControlName="oficio" id="defaultRegisterFormFirstName" class="form-control mb-0 mt-4"
+              placeholder="Oficio">
+            <div class="text-danger"
+              *ngIf="productoFormu.get('oficio')?.hasError('required') && productoFormu.get('oficio')?.touched">
+              <span>El oficio es obligatorio</span></div>
+
+
+            <div class="form-row mb-4 mt-4">
+              <div class="col">
+                <input type="number" formControlName="numero" id="defaultRegisterFormFirstName" class="form-control "
+                  placeholder="Numero">
+                <div class="text-danger"
+                  *ngIf="productoFormu.get('numero')?.hasError('required') && productoFormu.get('numero')?.touched">
+                  <span>El numero es obligatorio</span></div>
+
+              </div>
+              <div class="col">
+                <input type="date" formControlName="fecha_inicio" id="defaultRegisterFormLastName" class="form-control"
+                  placeholder="Fecha Inicio">
+                <div class="text-danger"
+                  *ngIf="productoFormu.get('fecha_inicio')?.hasError('required') && productoFormu.get('fecha_inicio')?.touched">
+                  <span>La fecha es obligatorio</span></div>
+
+              </div>
+            </div>
+            <input type="number" formControlName="salario" id="defaultRegisterFormFirstName"
+              class="form-control mb-0 mt-4" placeholder="Salario">
+            <div class="text-danger"
+              *ngIf="productoFormu.get('salario')?.hasError('required') && productoFormu.get('salario')?.touched">
+              <span>El salario es obligatorio</span></div>
+            <div class="modal-footer d-flex justify-content-around mt-4 p-0">
+              <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button type="submit" [disabled]="productoFormu.invalid" class="btn btn-success">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 </section>

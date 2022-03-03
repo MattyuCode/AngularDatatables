@@ -9,6 +9,11 @@ import { HomeComponent } from './components/home/home.component';
 import { NabvarComponent } from './components/nabvar/nabvar.component';
 // DataTables
 import { DataTablesModule } from 'angular-datatables';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// Toaster
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,10 @@ import { DataTablesModule } from 'angular-datatables';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
 
   ],
   providers: [],
