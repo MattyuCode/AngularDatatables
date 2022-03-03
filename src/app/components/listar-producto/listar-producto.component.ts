@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 export class ListarProductoComponent implements OnInit {
 
   public productoFormu: FormGroup;
+  mostrarAgregar!: boolean;
+  mostrarActualizar!: boolean;
+
 
   constructor(private formu: FormBuilder, private toastr: ToastrService, private router: Router) {
     this.productoFormu = this.formu.group({
@@ -44,7 +47,10 @@ export class ListarProductoComponent implements OnInit {
         "loadingRecords": "Cargando...",
         "processing": "Procesando...",
         "search": "Buscar:",
-        "zeroRecords": "Sin resultados encontrados",
+        // "zeroRecords": "Sin resultados encontrados",
+        "zeroRecords": `<div class="alert alert-danger" role="alert">
+        <h5>Sin resultados encontrados</h5>
+      </div>`,
         "paginate": {
           "first": "Primero",
           "last": "Ultimo",
@@ -70,5 +76,29 @@ export class ListarProductoComponent implements OnInit {
     let refresh = document.getElementById('cancel')
     refresh?.click();
     this.productoFormu.reset();
+  }
+
+  editDatos() {
+    // this.productoFormu.controls['nombre'].setValue(row.nombre);
+    this.mostrarAgregar = false;
+    this.mostrarActualizar = true;
+  }
+
+  updateDatos() {
+    this.toastr.info("El producto fue actualizado exitosamente", "Producto Actualizado");
+    let refresh = document.getElementById('cancel')
+    refresh?.click();
+    // this.productoFormu.reset();
+  }
+
+  deleteDatos() {
+    this.toastr.error("Se eliminado exitosamente", "Producto Eliminado");
+
+  }
+
+  clickAddDatos() {
+    this.productoFormu.reset();
+    this.mostrarAgregar = true;
+    this.mostrarActualizar = false;
   }
 }
