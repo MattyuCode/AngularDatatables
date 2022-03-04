@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Producto } from 'src/app/models/producto/producto.module';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ProductoService } from 'src/app/services/producto.service';
 
 @Component({
   selector: 'app-listar-producto',
@@ -10,13 +11,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./listar-producto.component.scss']
 })
 export class ListarProductoComponent implements OnInit {
+  listarAllProductos: Producto[] = [];
 
-  public productoFormu: FormGroup;
+  productoFormu: FormGroup;
   mostrarAgregar!: boolean;
   mostrarActualizar!: boolean;
 
 
-  constructor(private formu: FormBuilder, private toastr: ToastrService, private router: Router) {
+  constructor(
+    private formu: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router,
+    private productoService: ProductoService) {
+
     this.productoFormu = this.formu.group({
       nombre: ['', Validators.required],
       posicion: ['', Validators.required],
@@ -27,8 +34,21 @@ export class ListarProductoComponent implements OnInit {
     })
   }
 
+  obtenerProductos() {
+    this.productoService.getProductos().subscribe(datahere => {
+      console.log("List here", datahere);
+      this.listarAllProductos = datahere;
+    }, e => {
+      console.log(e);
+    })
+  }
+
+
+
   dtOptions: any = {};
   ngOnInit() {
+    this.obtenerProductos();
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 5,
@@ -37,7 +57,10 @@ export class ListarProductoComponent implements OnInit {
       processing: true,
       language: {
         "decimal": "",
-        "emptyTable": "No hay información",
+        // "emptyTable": "No hay información",
+        "emptyTable": `<div class="alert alert-info" role="alert">
+        No hay información
+      </div>`,
         "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
         "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
         "infoFiltered": "(Filtrado de _MAX_ total entradas)",
@@ -59,6 +82,8 @@ export class ListarProductoComponent implements OnInit {
         }
       },
     };
+
+
   }
 
   agregarProduc() {
@@ -91,7 +116,7 @@ export class ListarProductoComponent implements OnInit {
     // this.productoFormu.reset();
   }
 
-  deleteDatos() {
+  deleteDatos(id: any) {
     this.toastr.error("Se eliminado exitosamente", "Producto Eliminado");
 
   }

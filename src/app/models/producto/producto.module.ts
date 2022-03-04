@@ -2,7 +2,7 @@
 
 export class Producto {
 
-  //  _id?: number;
+  _id?: number;
   nombre: string;
   posicion: string;
   oficio: string;
